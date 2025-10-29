@@ -210,3 +210,11 @@
   color: #ddd;
   font-size: 14px;
 }
+
+/* 사이즈 선택 드롭다운 스타일 9번 과제 */
+.size-dropdown {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
