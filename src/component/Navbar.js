@@ -1,10 +1,9 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ authenticate, setAuthenticate }) => {
   const menuList = [
     "여성",
     "남성",
@@ -14,32 +13,41 @@ const Navbar = () => {
     "Sale",
     "지속가능성",
   ];
+
   const navigate = useNavigate();
+
   const goToLogin = () => {
     navigate("/login");
   };
+
+  const handleLogout = () => {
+    setAuthenticate(false);
+    navigate("/");
+  };
+
   const goToMain = () => {
     navigate("/");
   };
+
   const search = (event) => {
     if (event.key === "Enter") {
-      // 입력한 검색어를 읽어와서
-      let keyword = event.target.value;
-
-      // url을 바꿔준다
-      navigate(`/?q=${keyword}`);
-      // ?q=검색어
+      const keyword = event.target.value;
+      navigate(`/?q=${encodeURIComponent(keyword)}`);
     }
   };
 
   return (
     <div>
       <div>
-        <div className="login-button" onClick={goToLogin}>
+        <div
+          className="login-button"
+          onClick={authenticate ? handleLogout : goToLogin}
+        >
           <FontAwesomeIcon icon={faUser} />
-          <div>로그인</div>
+          <div>{authenticate ? "로그아웃" : "로그인"}</div>
         </div>
       </div>
+
       <div className="nav-section">
         <img
           width={100}
@@ -49,6 +57,7 @@ const Navbar = () => {
           style={{ cursor: "pointer" }}
         />
       </div>
+
       <div className="search-container">
         <div className="search-box">
           <FontAwesomeIcon icon={faSearch} className="search-icon" />
@@ -56,14 +65,15 @@ const Navbar = () => {
             type="text"
             placeholder="제품검색"
             className="search-input"
-            onKeyDown={(event) => search(event)}
+            onKeyDown={search}
           />
         </div>
       </div>
+
       <div className="menu-area">
         <ul className="menu-list">
           {menuList.map((menu) => (
-            <li>{menu}</li>
+            <li key={menu}>{menu}</li>
           ))}
         </ul>
       </div>
