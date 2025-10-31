@@ -1,9 +1,13 @@
+import { useState } from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ authenticate, setAuthenticate }) => {
+  const [sideMenuOpen, setSideMenuOpen] = useState(false);
+
   const menuList = [
     "여성",
     "남성",
@@ -36,6 +40,14 @@ const Navbar = ({ authenticate, setAuthenticate }) => {
     }
   };
 
+  const toggleSideMenu = () => {
+    setSideMenuOpen(!sideMenuOpen);
+  };
+
+  const closeSideMenu = () => {
+    setSideMenuOpen(false);
+  };
+
   return (
     <div>
       <div>
@@ -56,6 +68,9 @@ const Navbar = ({ authenticate, setAuthenticate }) => {
           onClick={goToMain}
           style={{ cursor: "pointer" }}
         />
+        <div className="hamburger-menu" onClick={toggleSideMenu}>
+          <FontAwesomeIcon icon={sideMenuOpen ? faTimes : faBars} />
+        </div>
       </div>
 
       <div className="search-container">
@@ -74,6 +89,28 @@ const Navbar = ({ authenticate, setAuthenticate }) => {
         <ul className="menu-list">
           {menuList.map((menu) => (
             <li key={menu}>{menu}</li>
+          ))}
+        </ul>
+      </div>
+      {/* 사이드 메뉴 오버레이 숨겨숨겨*/}
+      <div
+        className={`side-menu-overlay ${sideMenuOpen ? "active" : ""}`}
+        onClick={closeSideMenu}
+      ></div>
+
+      {/* 사이드 메뉴 */}
+      <div className={`side-menu ${sideMenuOpen ? "active" : ""}`}>
+        <div className="side-menu-header">
+          <h3>메뉴</h3>
+          <button className="side-menu-close" onClick={closeSideMenu}>
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+        </div>
+        <ul className="side-menu-list">
+          {menuList.map((menu) => (
+            <li key={menu} onClick={closeSideMenu}>
+              {menu}
+            </li>
           ))}
         </ul>
       </div>
