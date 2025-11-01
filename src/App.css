@@ -342,7 +342,25 @@
     display: none;
   }
 
-  /* .side-menu-overlay {
-    display: block;
-  } */
+  /* Container 패딩 추가 */
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  /* 상품 상세 페이지 이미지 중앙 정렬 */
+  .product-detail-image {
+    justify-content: center;
+  }
+
+  /* 상품 상세 페이지 정보 패딩 조정 */
+  .product-detail-info {
+    padding: 15px;
+  }
+
+  /* 상품 상세 컨테이너 패딩 추가 */
+  .product-detail-container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 }
